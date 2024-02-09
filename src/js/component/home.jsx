@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 
 function TodoItem({label, is_done, delete_todo, toggle_todo}){
@@ -15,11 +15,21 @@ function TodoItem({label, is_done, delete_todo, toggle_todo}){
 
 //create your first component
 const Home = () => {
-	const [todos, setTodos] = useState([
-		{label: "give the cats some tuna.", is_done: false},
-		{label: "Feed the cats", is_done: false},
-	]);
+	const [todos, setTodos] = useState([]);
 	const [todoInput, setTodoInput] = useState("");
+
+	useEffect(() => {
+		const local_todos = localStorage.getItem("todos");
+		if (local_todos) {
+			setTodos(JSON.parse(local_todos));
+		}
+	}, []);
+
+	// Keeps the thing in local storage so upson refresh it will keep data
+	useEffect(() => {
+		localStorage.setItem("todos", JSON.stringify(todos));
+	}, [todos]);
+
 
 	return (
 	<>
@@ -71,6 +81,7 @@ const Home = () => {
 						}
 					/>
 				))}
+				<small>{todos.filter((item) => item.is_done).length} todos left to do</small>
 			</form>
 		</div>
 	</>
