@@ -19,6 +19,7 @@ const Home = () => {
 		{label: "give the cats some tuna.", is_done: false},
 		{label: "Feed the cats", is_done: false},
 	]);
+	const [todoInput, setTodoInput] = useState("");
 
 	return (
 	<>
