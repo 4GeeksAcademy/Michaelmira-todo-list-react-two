@@ -31,7 +31,11 @@ const Home = () => {
 				<input class="form-control form-control-lg" 
 				type="text" 
 				placeholder="What do you want to get done today" 
-				aria-label="todo list input field">
+				aria-label="todo list input field"
+				value={todoInput}
+				onChange={ev => setTodoInput(ev.target.value)}
+				
+				>
 				</input>
 				{todos.map((item, idx) => (
 					<TodoItem 
