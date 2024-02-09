@@ -6,7 +6,7 @@ function TodoItem({label, is_done, delete_todo, toggle_todo}){
 		<div className="todo-item">
 			<input type="checkbox"checked={is_done} onChange={toggle_todo} />
 			<span className="todo-text"> {label} </span>
-			<button className="btn btn-danger" onClick= {delete_todo}>
+			<button type="button" className="btn btn-danger" onClick= {delete_todo}>
 				Delete
 			</button>
 		</div>
@@ -25,15 +25,28 @@ const Home = () => {
 	<>
 		<div className="container-flex">
 			<form 
-			onSubmit={(ev) => ev.preventDefault()}
+			onSubmit={(ev) => {
+				ev.preventDefault();
+				if (todoInput.length > 0) {
+					setTodos([
+						{
+							label: todoInput,
+							is_done: false,
+						},
+						 ...todos,
+					]);
+					setTodoInput("");
+				}
+			}}
 			className="container d-flex flex-column align-items-center justify-content-start" >
 				<h1>Todo List</h1>
-				<input class="form-control form-control-lg" 
-				type="text" 
-				placeholder="What do you want to get done today" 
-				aria-label="todo list input field"
-				value={todoInput}
-				onChange={ev => setTodoInput(ev.target.value)}
+				<input 
+					className="form-control form-control-lg" 
+					type="text" 
+					placeholder="What do you want to get done today" 
+					aria-label="todo list input field"
+					value={todoInput}
+					onChange={ev => setTodoInput(ev.target.value)}
 				
 				>
 				</input>
